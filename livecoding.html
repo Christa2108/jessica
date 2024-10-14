@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Tahun Kabisat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Status Tahun Kabisat, Hari 1 Januari, dan Jumlah Hari</h1>
+
+    <table id="leapYearTable">
+        <thead>
+            <tr>
+                <th>Tahun</th>
+                <th>Status Kabisat</th>
+                <th>1 Januari adalah Hari</th>
+                <th>Jumlah Hari dalam Tahun</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Isi tabel akan diisi oleh JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        function isLeapYear(year) {
+            return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+        }
+
+        function daysInYear(year) {
+            return isLeapYear(year) ? 366 : 365;
+        }
+
+        function dayOfJanuary1st(year) {
+            const date = new Date(year, 0, 1); // 0 di sini berarti Januari
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            return days[date.getDay()];
+        }
+
+        function displayYearInfo() {
+            const currentYear = new Date().getFullYear();
+            const startYear = currentYear - 30;
+            const endYear = currentYear + 20;
+
+            const tableBody = document.querySelector('#leapYearTable tbody');
+            for (let year = startYear; year <= endYear; year++) {
+                const leapYearStatus = isLeapYear(year) ? 'Kabisat' : 'Bukan Kabisat';
+                const january1stDay = dayOfJanuary1st(year);
+                const totalDays = daysInYear(year);
+
+                const row = `
+                    <tr>
+                        <td>${year}</td>
+                        <td>${leapYearStatus}</td>
+                        <td>${january1stDay}</td>
+                        <td>${totalDays}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            }
+        }
+
+        // Memanggil fungsi untuk menampilkan data ketika halaman selesai dimuat
+        window.onload = displayYearInfo;
+    </script>
+
+</body>
+</html>
